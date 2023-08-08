@@ -1,0 +1,9 @@
+**/__pycache__
+tests
+.dockerignore
+.git*
+config.json
+Dockerfile
+poetry.lock
+pyproject.toml
+README.md

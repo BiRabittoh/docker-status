@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <!-- Basic Page Needs
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta charset="utf-8">
+  <title>BiRabittoh - Status</title>
+  <meta name="description" content="A simple status page for my docker containers.">
+  <meta name="author" content="BiRabittoh">
+
+  <!-- Mobile Specific Metas
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- FONT
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+
+  <!-- CSS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="stylesheet" href="/static/css/normalize.css">
+  <link rel="stylesheet" href="/static/css/skeleton.css">
+
+  <!-- Favicon
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="icon" type="image/png" href="/static/images/favicon.png">
+
+</head>
+
+<body>
+
+  <!-- Primary Page Layout
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <div class="container">
+    <div class="row">
+      <div class="two-thirds column" style="margin-top: 15%">
+        <h4>Status</h4>
+        <p>This page shows the current status for all of my self-hosted services.</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="full column">
+        <table class="u-full-width">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Provides</th>
+              <th>Containers</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for k, v in services.items() %}
+            <tr id="{{ k }}" onclick="toggleHide(this)">
+              <td>
+                {{ k }}
+              </td>
+              <td>
+                {{ v["provides"] }}
+              </td>
+              <td class="service-names" data-content="{{ v['names'] }}">
+                {{ v['names'] }}
+              </td>
+              <td class="service-status" data-content="{{ v['status'] }}">
+                {{ v["status"] }}
+              </td>
+            </tr>
+            {% for c in v["containers"] %}
+            <tr class="{{ k }}" hidden>
+              <td></td>
+              <td></td>
+              <td>{{ c["name"] }}</td>
+              <td>{{ c["status"] }}</td>
+            </tr>
+            {% endfor %}
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <script>
+    function toggleContent(element) {
+      if (element.innerText.trim() == "") {
+        element.innerText = element.getAttribute("data-content");
+        return;
+      }
+      element.innerText = "";
+    }
+
+    function toggleHide(element) {
+      const element_id = element.id;
+      const containers = document.getElementsByClassName(element_id);
+      const service_status = element.getElementsByClassName("service-status")[0];
+      const service_names = element.getElementsByClassName("service-names")[0];
+      for (container of containers)
+        container.hidden = !container.hidden;
+      toggleContent(service_status);
+      toggleContent(service_names);
+    }
+  </script>
+
+  <!-- End Document
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+</body>
+
+</html>
