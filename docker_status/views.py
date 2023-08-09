@@ -4,8 +4,11 @@ from flask import request, redirect, render_template
 from docker_status import app
 from docker_status.my_docker import update_status
 
+last_updated = datetime.now()
+
 @app.route('/', methods=['GET', 'POST'])
 def route_index():
+    last_updated = datetime.now()
     services = update_status()
     for name, service in services.items():
         containers = service["containers"]
@@ -14,3 +17,8 @@ def route_index():
     if request.method == 'GET':
         return render_template("index.html", services=services)
     return json.dumps(services)
+
+@app.route('/stats')
+def route_stats():
+    return json.dumps({ "last_updated": last_updated.strftime("%Y-%m-%dT%H:%M:%SZ") })
+    

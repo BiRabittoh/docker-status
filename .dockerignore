@@ -2,7 +2,8 @@
 tests
 .dockerignore
 .git*
-config.json
+config.*
+docker-compose.yaml
 Dockerfile
 poetry.lock
 pyproject.toml
