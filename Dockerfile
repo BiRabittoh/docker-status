@@ -1,9 +1,9 @@
-FROM python:3-alpine
+FROM tecktron/python-bjoern:latest-slim
 
-WORKDIR /app
 RUN pip install --upgrade pip
 COPY ./requirements.txt .
 RUN pip install -r requirements.txt
-COPY . .
 
-CMD ["waitress-serve", "--host", "0.0.0.0", "--port", "1111", "docker_status:app"]
+COPY ./docker_status /app/docker_status
+WORKDIR /app
+ENV APP_MODULE=docker_status:app
