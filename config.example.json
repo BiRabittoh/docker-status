@@ -1,0 +1,26 @@
+{
+    "Invidious": {
+        "provides": "YouTube",
+        "url": "https://invidious.mywebsite.com",
+        "containers": [
+            {
+                "name": "invidious",
+                "test": "https://invidious.mywebsite.com/api/v1/stats"
+            },
+            {
+                "name": "invidious-db",
+                "test": null
+            }
+        ]
+    },
+    "LibReddit": {
+        "provides": "Reddit",
+        "url": "https://reddit.mywebsite.com",
+        "containers": [
+            {
+                "name": "libreddit",
+                "test": "https://libreddit.mywebsite.com/settings"
+            }
+        ]
+    }
+}
