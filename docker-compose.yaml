@@ -8,8 +8,8 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ${PWD}/config.json:/app/config.json:ro
-    healthcheck:
-      test: wget -nv --tries=1 --spider http://localhost:1111/stats || exit 1
-      interval: 30s
-      timeout: 5s
-      retries: 2
+    #healthcheck:
+    #  test: wget -nv --tries=1 --spider http://localhost/stats || exit 1
+    #  interval: 30s
+    #  timeout: 5s
+    #  retries: 2
