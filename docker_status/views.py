@@ -4,10 +4,11 @@ from flask import request, redirect, render_template
 from docker_status import app
 from docker_status.my_docker import update_status
 
-last_updated = datetime.now()
+last_updated = None
 
 @app.route('/', methods=['GET', 'POST'])
 def route_index():
+    global last_updated
     last_updated = datetime.now()
     services = update_status()
     for name, service in services.items():
@@ -20,5 +21,7 @@ def route_index():
 
 @app.route('/stats')
 def route_stats():
-    return json.dumps({ "last_updated": last_updated.strftime("%Y-%m-%dT%H:%M:%SZ") })
+    return json.dumps({
+        "last_updated": last_updated.strftime("%Y-%m-%dT%H:%M:%SZ%z") if last_updated is not None else None,
+    })
     
